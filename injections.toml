@@ -1,0 +1,4 @@
+[injections]
+repository = "postgres"
+token = "jwt"
+password_hash = "argon2"

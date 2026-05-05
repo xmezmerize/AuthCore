@@ -1,0 +1,27 @@
+[project]
+name = "AuthCore"
+version = "0.2.0"
+description = "Robust system for registration, authentication and management users"
+authors = [
+    {name = "Pedro Henrique", email = "pedrohenrisilva31@gmail.com"}
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi (>=0.115.0)",
+    "python-multipart (>=0.0.12)",
+    "jinja2 (>=3.1.4)",
+    "uvicorn (>=0.30.0)",
+    "python-dotenv (>=1.0.1)",
+    "psycopg2 (>=2.9.9)",
+    "pydantic (>=2.0.0)",
+    "duckdi (>=0.1.13)",
+    "pyjwt (>=2.10.0)",
+    "argon2-cffi (>=23.1.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
