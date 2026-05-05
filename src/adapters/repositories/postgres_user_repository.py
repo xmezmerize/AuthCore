@@ -100,4 +100,6 @@ class PostgresUserRepository(IUserRepository):
     def delete(self, id: str) -> None:
         sql = "DELETE FROM users WHERE id = %s;"
         self.cursor.execute(sql, (id,))
+        row = self.cursor.fetchone()
         self.connection.commit()
+        return row is not None

@@ -1,7 +1,7 @@
-from domain.dtos.users.find_user_dto import FindUserDto
 from domain.interfaces.repositories.i_user_repository import IUserRepository
 from domain.interfaces.providers.i_token_provider import ITokenProvider
 from entrypoints.responses.user_response import UserResponse
+from domain.dtos.users.find_user_dto import FindUserDto
 
 
 class FindUserUsecase:

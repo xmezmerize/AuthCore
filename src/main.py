@@ -1,8 +1,7 @@
-from fastapi import FastAPI
 from dotenv import load_dotenv
+from fastapi import FastAPI
 
 from entrypoints.routes import user_routes
-
 import framework.container
 
 load_dotenv()

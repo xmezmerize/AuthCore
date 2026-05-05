@@ -6,5 +6,5 @@ from duckdi import register
 
 
 register(PostgresRepositoryFactory, label="postgres", is_singleton=True)
-register(JwtTokenProvider, label="jwt", is_singleton=True)
 register(Argon2PasswordProvider, label="argon2", is_singleton=True)
+register(JwtTokenProvider, label="jwt", is_singleton=True)

@@ -6,8 +6,8 @@ from duckdi import Get
 
 
 class DeleteUserController:
-    def delete(self, authorization: str) -> None:
+    def delete(self, id: str, authorization: str) -> None:
         factory = Get(IRepositoryFactory, "repository").get_user_repository()
         token = Get(ITokenProvider, "token")
 
-        return DeleteUserUsecase(factory, token).execute(authorization)
+        return DeleteUserUsecase(factory, token).execute(id, authorization)

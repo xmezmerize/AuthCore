@@ -6,7 +6,7 @@ class HandlerJwt:
         authorization = request.headers.get("Authorization")
 
         if not authorization:
-            raise HTTPException(status_code=401, detail="Header ausente")
+            raise HTTPException(status_code=401, detail="Header off")
         
         if authorization.startswith("Bearer "):
             return authorization.replace("Bearer ", "")

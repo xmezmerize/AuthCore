@@ -8,9 +8,10 @@ from domain.dtos.users.user_dto import UserDto
 
 class CreateUserUsecase:
     def __init__(
-            self,
-            user_repository: IUserRepository,
-            password_provider: IPasswordProvider):
+        self,
+        user_repository: IUserRepository,
+        password_provider: IPasswordProvider
+    ):
         self.user_repository = user_repository
         self.password_provider = password_provider
     
