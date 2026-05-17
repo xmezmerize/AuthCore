@@ -13,26 +13,22 @@ class DeleteUserUsecase:
         self.token_provider = token_provider
 
     def execute(self, id: str, token: str) -> UserResponse:
-        decoded = self.token_provider.verify(token)
-        user_id_from_token = decoded.get("sub")
+        token_decoded = self.token_provider.verify(token)
+            
+        if not token_decoded:
+            raise NameError("Erro: DeleteUserUsecase (-> token_decoded <-) token inválido ou expirado...")
+        
+        id = token_decoded.get("sub")
 
-        if str(user_id_from_token) != str(id):
-            return UserResponse(
-                id=id,
-                name="",
-                email="",
-                message="You can only delete your own account!"
-            )
+        row = self.user_repository.delete(id)
 
-        deleted = self.user_repository.delete(id)
-
-        if deleted:
+        if row:
             return UserResponse(
                 id=id, 
-                message="This user was deleted!"
+                message="O usuário foi deletado com sucesso!"
             )
-        
+
         return UserResponse(
             id=id,
-            message="User not found or cannot be deleted."
+            message="O usuário não foi encontrado ou não pôde ser excluído!"
         )

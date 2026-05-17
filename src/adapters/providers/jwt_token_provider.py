@@ -1,7 +1,7 @@
 from domain.interfaces.providers.i_token_provider import ITokenProvider
 from datetime import datetime, timedelta, timezone
-import os
 import jwt
+import os
 
 
 class JwtTokenProvider(ITokenProvider):
@@ -10,7 +10,7 @@ class JwtTokenProvider(ITokenProvider):
 
         secret = os.getenv("JWT_SECRET", None)
         if secret is None or len(secret) == 0:
-            raise EnvironmentError("Couldn't find \"JWT_SECRET\" ENV!")
+            raise EnvironmentError("Não foi encontrado: \"JWT_SECRET\" ENV!")
         
         self.secret = secret
         

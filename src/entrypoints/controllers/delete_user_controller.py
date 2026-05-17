@@ -1,7 +1,6 @@
 from domain.interfaces.providers.i_token_provider import ITokenProvider
 from domain.usecases.users.delete_user_usecase import DeleteUserUsecase
 from framework.factories.i_repository_factory import IRepositoryFactory
-
 from duckdi import Get
 
 

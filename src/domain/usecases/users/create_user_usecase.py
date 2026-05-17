@@ -16,25 +16,23 @@ class CreateUserUsecase:
         self.password_provider = password_provider
     
     def execute(self, dto: CreateUserDto) -> UserDto:
-        user_already_exists = self.user_repository.find(
-            FindUserDto(email=dto.email)
-            )
+        verify_user = self.user_repository.find(FindUserDto(email=dto.email))
         
-        if len(user_already_exists) > 0:
-            raise NameError("Error: This user couldn't be created! This email already in use...")
+        if len(verify_user) > 0:
+            raise NameError(f"Erro: CreateUserUsecase (-> dto.email <-) já existe um usuário com esse email")
         
         if len(dto.password) == 0:
-            raise NameError("Error: This user couldn't be created! The password cannot be empty...")
+            raise NameError("Erro: CreateUserUsecase (-> dto.password <-) a senha não pode ser vazia")
         
         dto.password = self.password_provider.hash(dto.password)
-
-        user = self.user_repository.create(dto)
+        
+        row = self.user_repository.create(dto)
 
         return UserResponse(
-            id=str(user.id),
-            name=user.name,
-            email=user.email,
-            created_at=user.created_at,
-            updated_at=user.updated_at,
-            message="This user was created!"
+            id=str(row.id),
+            name=row.name,
+            email=row.email,
+            created_at=row.created_at,
+            updated_at=row.updated_at,
+            message="Usuário criado com sucesso!"
         )

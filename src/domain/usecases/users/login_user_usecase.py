@@ -17,13 +17,15 @@ class LoginUserUsecase:
         self.token_provider = token_provider
     
     def execute(self, dto: LoginUserDto) -> str:
-        users = self.repository.find(FindUserDto(email=dto.email))
-        if not users:
-            raise NameError("Error: Invalid credencials!")
+        verify_user = self.repository.find(FindUserDto(email=dto.email))
+        if not verify_user:
+            raise NameError("Erro: LoginUserUsecase (-> dto.email <-) email não encontrado ou inválido")
         
-        user = users[0]
+        user = verify_user[0]
+
         is_password_valid = self.password_provider.verify(dto.password, user.password)
+
         if not is_password_valid:
-            raise NameError("Error: Invalid credencials!")
+            raise NameError("Erro: LoginUserUsecase (-> is_password_valid <-) senha inválida")
 
         return self.token_provider.generate(user.id)

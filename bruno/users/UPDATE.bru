@@ -1,0 +1,23 @@
+meta {
+  name: UPDATE
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://127.0.0.1:8000/9b99c035-39a3-4f92-b911-80bf3ab21627
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5Yjk5YzAzNS0zOWEzLTRmOTItYjkxMS04MGJmM2FiMjE2MjciLCJpYXQiOjE3NzkwNDA4OTcsImV4cCI6MTc3OTA0NDQ5N30.Sq1Fef3kbCxkRRxpnrxvX21CNV4AUa-Ao10KLp5fyAs
+}
+
+body:json {
+  {
+    "name": "Pedrinho",
+    "email": "pedro@pedro.com",
+    "password": "Pedro1234"
+  }
+}

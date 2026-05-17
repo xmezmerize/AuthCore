@@ -4,7 +4,6 @@ from framework.factories.i_repository_factory import IRepositoryFactory
 from domain.usecases.users.login_user_usecase import LoginUserUsecase
 from entrypoints.requests.login_user_request import LoginUserRequest
 from domain.dtos.users.login_user_dto import LoginUserDto
-
 from duckdi import Get
 
 

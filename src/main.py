@@ -1,14 +1,14 @@
+from entrypoints.routes import user_routes
 from dotenv import load_dotenv
 from fastapi import FastAPI
-
-from entrypoints.routes import user_routes
 import framework.container
+
 
 load_dotenv()
 
 app = FastAPI(
     title="AuthCore",
-    version="0.2.0",
+    version="0.2.1",
     description="Under construction..."
 )
 

@@ -6,14 +6,13 @@ from entrypoints.controllers.find_user_controller import FindUserController
 from entrypoints.requests.update_user_request import UpdateUserRequest
 from entrypoints.requests.create_user_request import CreateUserRequest
 from entrypoints.requests.login_user_request import LoginUserRequest
-
-from fastapi import APIRouter, Request, status
 from framework.helpers.handler_jwt import HandlerJwt
+from fastapi import APIRouter, Request, status
 
 
-route = APIRouter()
+route = APIRouter(tags=["users"])
 
-@route.post("/register", status_code=status.HTTP_201_CREATED)
+@route.post("/create", status_code=status.HTTP_201_CREATED)
 async def create(request: CreateUserRequest):
     return CreateUserController().create(request)
 
@@ -21,10 +20,11 @@ async def create(request: CreateUserRequest):
 async def login(request: LoginUserRequest):
     return LoginUserController().login(request)
 
-@route.get("/infos", status_code=status.HTTP_200_OK)
+@route.get("/find", status_code=status.HTTP_200_OK)
 async def find(data: Request):
     authorization = HandlerJwt().get_jwt_from_request(data)
-    return FindUserController().find(authorization)
+    search = data.query_params.get("search")
+    return FindUserController().find(authorization, search)
 
 @route.put("/{id}", status_code=status.HTTP_200_OK)
 async def update(id: str, request: UpdateUserRequest, data: Request):

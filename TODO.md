@@ -1,5 +1,4 @@
-Próximos passos:
+próximos passos:
 
-- Integração com front-end
-- Funcionalidades front-end
-- Verificação de email (receber código de verificação no email)
+- implementar refresh token
+- implementar verificação de email (receber um PIN de 6 dígitos no email para validar)

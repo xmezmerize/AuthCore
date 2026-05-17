@@ -17,16 +17,19 @@ class UpdateUserUsecase:
         self.token_provider = token_provider
         
     def execute(self, dto: UpdateUserDto, token: str):
-        decoded = self.token_provider.verify(token)
-        user_id_from_token = decoded.get("sub")
+        token_decoded = self.token_provider.verify(token)
+        id = token_decoded.get("sub")
 
-        if user_id_from_token != dto.id:
-            raise ValueError("You cannot update this user!")
+        if id != dto.id:
+            raise NameError("Erro: UpdateUserUsecase (-> sub <-)")
 
-        updated_user = self.user_repository.update(dto.id, dto)
+        row = self.user_repository.update(dto.id, dto)
+
         return UserResponse(
-             id=str(updated_user.id),
-             name=updated_user.name, 
-             email=updated_user.email,
-             message="Updated with success!"
+             id=str(row.id),
+             name=row.name, 
+             email=row.email,
+             created_at=row.created_at,
+             updated_at=row.updated_at,
+             message="Usuário atualizado com sucesso!"
              )

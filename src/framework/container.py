@@ -1,7 +1,6 @@
 from framework.factories.adapters.postgres_repository_factory import PostgresRepositoryFactory
 from adapters.providers.argon2_password_provider import Argon2PasswordProvider
 from adapters.providers.jwt_token_provider import JwtTokenProvider
-
 from duckdi import register
 
 

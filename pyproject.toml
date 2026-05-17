@@ -1,6 +1,6 @@
 [project]
 name = "AuthCore"
-version = "0.2.0"
+version = "0.2.1"
 description = "Robust system for registration, authentication and management users"
 authors = [
     {name = "Pedro Henrique", email = "pedrohenrisilva31@gmail.com"}

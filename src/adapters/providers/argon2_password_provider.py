@@ -10,4 +10,4 @@ class Argon2PasswordProvider(IPasswordProvider):
         try:
             return PasswordHasher().verify(hash, password)
         except:
-            raise ValueError("Error: Invalid Credentials!")
+            raise NameError("Erro: Argon2PasswordProvider (-> password <-) senha inválida")

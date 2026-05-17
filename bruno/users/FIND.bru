@@ -1,0 +1,19 @@
+meta {
+  name: FIND
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://127.0.0.1:8000/find?search=17\/05\/2026
+  body: none
+  auth: bearer
+}
+
+params:query {
+  search: 17\/05\/2026
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5Yjk5YzAzNS0zOWEzLTRmOTItYjkxMS04MGJmM2FiMjE2MjciLCJpYXQiOjE3NzkwNDA4OTcsImV4cCI6MTc3OTA0NDQ5N30.Sq1Fef3kbCxkRRxpnrxvX21CNV4AUa-Ao10KLp5fyAs
+}
