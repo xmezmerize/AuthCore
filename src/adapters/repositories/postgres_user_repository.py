@@ -37,20 +37,29 @@ class PostgresUserRepository(IUserRepository):
                         updated_at=row[5]
                     )
         except errors.UniqueViolation:
-            raise ConflictError(f"O email {dto.email} já está em uso.")
+            raise ConflictError(f"Erro interno: O email {dto.email} já está em uso.")
         except Exception as e:
-            raise DatabaseError("Erro interno ao processar o banco de dados.") from e
+            raise DatabaseError("Erro interno: Não foi possível processar a criação desse usuário no banco de dados.") from e
 
     def find(self, dto: FindUserDto = FindUserDto()) -> list[UserDto]:
         sql = "SELECT * FROM users"
         conditions = []
         filters = {}
-        if dto.id: conditions.append("id = %(id)s"); filters['id'] = dto.id
-        if dto.created_at: conditions.append("created_at::date = %(created_at)s"); filters['created_at'] = dto.created_at
-        if dto.updated_at: conditions.append("updated_at::date = %(updated_at)s"); filters['updated_at'] = dto.updated_at
-        if dto.name: conditions.append("name ILIKE %(name)s"); filters['name'] = f"%{dto.name}%"
-        if dto.email: conditions.append("email ILIKE %(email)s"); filters['email'] = f"%{dto.email}%"
-        
+        if dto.id:
+            conditions.append("id = %(id)s")
+            filters['id'] = dto.id
+        if dto.created_at:
+            conditions.append("created_at::date = %(created_at)s")
+            filters['created_at'] = dto.created_at
+        if dto.updated_at:
+            conditions.append("updated_at::date = %(updated_at)s")
+            filters['updated_at'] = dto.updated_at
+        if dto.name:
+            conditions.append("name ILIKE %(name)s")
+            filters['name'] = f"%{dto.name}%"
+        if dto.email:
+            conditions.append("email ILIKE %(email)s")
+            filters['email'] = f"%{dto.email}%"
         if conditions:
             sql += " WHERE " + " OR ".join(conditions)
         try:
@@ -69,7 +78,7 @@ class PostgresUserRepository(IUserRepository):
                         ) for row in rows
                     ]
         except Exception as e:
-            raise DatabaseError("Erro interno ao buscar usuários no banco.") from e
+            raise DatabaseError("Erro interno: Não foi possível buscar usuários no banco.") from e
 
     def update(self, id: str, dto: UpdateUserDto) -> Optional[UserDto]:
         sql = """
@@ -97,9 +106,9 @@ class PostgresUserRepository(IUserRepository):
                         updated_at=row[5]
                     ) if row else None
         except errors.UniqueViolation:
-            raise ConflictError(f"O email {dto.email} já está sendo utilizado por outro usuário.")
+            raise ConflictError(f"Erro interno: O email {dto.email} já está sendo utilizado por outro usuário.")
         except Exception as e:
-            raise DatabaseError("Não foi possível atualizar os dados do usuário.") from e
+            raise DatabaseError("Erro interno: Não foi possível atualizar os dados do usuário.") from e
     
     def delete(self, id: str) -> None:
         sql = "DELETE FROM users WHERE id = %s RETURNING id;"
@@ -115,4 +124,4 @@ class PostgresUserRepository(IUserRepository):
         except NotFoundError:
             raise
         except Exception as e:
-            raise DatabaseError("Não foi possível excluir o usuário.") from e
+            raise DatabaseError("Erro interno: Não foi possível excluir o usuário.") from e

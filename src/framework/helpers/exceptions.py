@@ -11,3 +11,7 @@ class NotFoundError(DatabaseError):
 class ConflictError(DatabaseError):
     def __init__(self, message: str):
         super().__init__(message, status_code=409)
+
+class UnauthorizedError(DatabaseError):
+    def __init__(self, message: str = "Não autorizado."):
+        super().__init__(message, status_code=401)

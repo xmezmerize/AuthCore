@@ -1,24 +1,24 @@
-from entrypoints.controllers.create_user_controller import CreateUserController
-from entrypoints.controllers.delete_user_controller import DeleteUserController
-from entrypoints.controllers.update_user_controller import UpdateUserController
-from entrypoints.controllers.login_user_controller import LoginUserController
-from entrypoints.controllers.find_user_controller import FindUserController
-from entrypoints.requests.update_user_request import UpdateUserRequest
-from entrypoints.requests.create_user_request import CreateUserRequest
-from entrypoints.requests.login_user_request import LoginUserRequest
+from entrypoints.controllers.users.create_user_controller import CreateUserController
+from entrypoints.controllers.users.update_user_controller import UpdateUserController
+from entrypoints.controllers.users.delete_user_controller import DeleteUserController
+from entrypoints.controllers.users.login_user_controller import LoginUserController
+from entrypoints.controllers.users.find_user_controller import FindUserController
+from entrypoints.requests.users.create_user_request import CreateUserRequest
+from entrypoints.requests.users.update_user_request import UpdateUserRequest
+from entrypoints.requests.users.login_user_request import LoginUserRequest
+from fastapi import APIRouter, Request, Response, status
 from framework.helpers.handler_jwt import HandlerJwt
-from fastapi import APIRouter, Request, status
 
 
-route = APIRouter(tags=["users"])
+route = APIRouter()
 
 @route.post("/create", status_code=status.HTTP_201_CREATED)
 async def create(request: CreateUserRequest):
     return CreateUserController().create(request)
 
 @route.post("/login", status_code=status.HTTP_202_ACCEPTED)
-async def login(request: LoginUserRequest):
-    return LoginUserController().login(request)
+async def login(request: LoginUserRequest, response: Response):
+    return LoginUserController().login(request, response)
 
 @route.get("/find", status_code=status.HTTP_200_OK)
 async def find(data: Request):

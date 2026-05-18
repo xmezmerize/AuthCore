@@ -1,6 +1,6 @@
 from domain.interfaces.providers.i_password_provider import IPasswordProvider
 from domain.interfaces.repositories.i_user_repository import IUserRepository
-from entrypoints.responses.user_response import UserResponse
+from entrypoints.responses.users.user_response import UserResponse
 from domain.dtos.users.create_user_dto import CreateUserDto
 from domain.dtos.users.find_user_dto import FindUserDto
 from domain.dtos.users.user_dto import UserDto
@@ -10,7 +10,7 @@ class CreateUserUsecase:
     def __init__(
         self,
         user_repository: IUserRepository,
-        password_provider: IPasswordProvider
+        password_provider: IPasswordProvider,
     ):
         self.user_repository = user_repository
         self.password_provider = password_provider
@@ -19,10 +19,10 @@ class CreateUserUsecase:
         verify_user = self.user_repository.find(FindUserDto(email=dto.email))
         
         if len(verify_user) > 0:
-            raise NameError(f"Erro: CreateUserUsecase (-> dto.email <-) já existe um usuário com esse email")
+            raise NameError(f"Erro: Já existe um usuário com o email {dto.email}")
         
         if len(dto.password) == 0:
-            raise NameError("Erro: CreateUserUsecase (-> dto.password <-) a senha não pode ser vazia")
+            raise NameError("Erro: A senha não pode ser vazia")
         
         dto.password = self.password_provider.hash(dto.password)
         

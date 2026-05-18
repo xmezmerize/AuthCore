@@ -1,7 +1,7 @@
 from domain.interfaces.providers.i_password_provider import IPasswordProvider
 from domain.interfaces.repositories.i_user_repository import IUserRepository
 from domain.interfaces.providers.i_token_provider import ITokenProvider
-from entrypoints.responses.user_response import UserResponse
+from entrypoints.responses.users.user_response import UserResponse
 from domain.dtos.users.update_user_dto import UpdateUserDto
 
 
@@ -21,7 +21,7 @@ class UpdateUserUsecase:
         id = token_decoded.get("sub")
 
         if id != dto.id:
-            raise NameError("Erro: UpdateUserUsecase (-> sub <-)")
+            raise NameError("Erro: Usuário não foi encontrado!")
 
         row = self.user_repository.update(dto.id, dto)
 
