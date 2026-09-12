@@ -61,24 +61,15 @@ class PostgresUserRepository(IUserRepository):
             conditions.append("email ILIKE %(email)s")
             filters['email'] = f"%{dto.email}%"
         if conditions:
-            sql += " WHERE " + " OR ".join(conditions)
+            sql += " WHERE " + " AND ".join(conditions)
         try:
             with get_conn() as conn:
                 with conn.cursor() as cursor:
                     cursor.execute(sql, filters)
                     rows = cursor.fetchall()
-                    return [
-                        UserDto(
-                            id=row[0],
-                            name=row[1],
-                            email=row[2],
-                            password=row[3],
-                            created_at=row[4],
-                            updated_at=row[5]
-                        ) for row in rows
-                    ]
+                    return [UserDto(*row)for row in rows]
         except Exception as e:
-            raise DatabaseError("Erro interno: Não foi possível buscar usuários no banco.") from e
+            raise DatabaseError("Internal Error: We were unable to retrieve users from the database.") from e
 
     def update(self, id: str, dto: UpdateUserDto) -> Optional[UserDto]:
         sql = """
